@@ -21,6 +21,8 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+    font-family: "Inter", sans-serif;
+    color: var(--color-text);
 }
 
 .main-content {
@@ -28,15 +30,24 @@ body {
     flex-direction: column;
     height: 100%;
     width: 100%;
+    max-width: 800px; /* Adicionado um limite de largura para desktop */
 }
 
 /* Banner */
 .header-banner {
     flex: 40%;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
-    padding: 40px 0 0;
+    padding: 40px 20px 0;
+    text-align: center;
+}
+
+.header-banner img {
+    max-width: 100%;
+    height: auto;
+    margin-top: 20px;
 }
 
 /* Seção de entrada */
@@ -54,7 +65,7 @@ body {
 
 /* Títulos */
 .main-title {
-    font-size: 48px;
+    font-size: clamp(32px, 5vw, 48px); /* Fonte responsiva */
     font-family: "Merriweather", serif;
     font-weight: 900;
     font-style: italic;
@@ -62,8 +73,7 @@ body {
 }
 
 .section-title {
-    font-family: "Inter", serif;
-    font-size: 36px;
+    font-size: clamp(24px, 4vw, 36px); /* Fonte responsiva */
     font-weight: 700;
     color: var(--color-primary);
     margin: 10px 0;
@@ -80,45 +90,38 @@ body {
 }
 
 .input-name {
-    width: 100%;
+    flex: 1; /* Adicionado flex-1 para preencher o espaço */
     padding: 10px;
     border: 2px solid #000;
     border-radius: 25px 0 0 25px;
     font-size: 16px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Efeito de sombra mais suave */
 }
 
 .button-container {
-    width: 300px;
+    display: flex;
     justify-content: center;
-}
-
-/* Estilos de entrada de texto */
-.input-title {
-    flex: 1;
-    padding: 10px 15px;
-    font-size: 16px;
-    border: 2px solid #333;
-    border-right: none;
-    border-radius: 25px 0 0 25px;
-    font-family: "Merriweather", serif;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    width: 100%;
+    margin-top: 20px;
 }
 
 /* Estilos de botão */
 button {
     padding: 15px 30px;
-    font-family: "Inter", sans-serif;
+    font-family: inherit; /* Herdando a fonte do body */
     font-size: 16px;
     border: 2px solid #000;
     border-radius: 25px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
     cursor: pointer;
+    transition: background-color 0.3s ease; /* Transição suave para o hover */
 }
 
 .button-add {
     background-color: var(--color-tertiary);
     color: var(--color-text);
     border-radius: 0 25px 25px 0;
+    padding: 10px 20px;
 }
 
 .button-add:hover {
@@ -126,12 +129,13 @@ button {
 }
 
 /* Listas */
-ul {
+.name-list, .result-list {
     list-style-type: none;
-    color: var(--color-text);
-    font-family: "Inter", sans-serif;
-    font-size: 18px;
+    padding: 0;
     margin: 20px 0;
+    width: 100%;
+    max-width: 600px;
+    text-align: center;
 }
 
 .result-list {
@@ -139,14 +143,15 @@ ul {
     color: #05DF05;
     font-size: 22px;
     font-weight: bold;
-    text-align: center;
 }
 
 /* Botão de sortear título */
 .button-draw {
     display: flex;
     align-items: center;
-    width: 100%;
+    justify-content: center;
+    gap: 10px; /* Espaço entre o ícone e o texto */
+    width: auto; /* Largura automática */
     padding: 10px 40px;
     color: var(--color-white);
     background-color: var(--color-button);
@@ -154,9 +159,79 @@ ul {
 }
 
 .button-draw img {
-    margin-right: 40px;
+    margin-right: 0;
+    height: 24px;
 }
 
 .button-draw:hover {
     background-color: var(--color-button-hover);
+}
+
+/* Estilos para o item da lista */
+.name-list-item {
+    display: inline-block;
+    background-color: var(--color-white);
+    padding: 8px 15px;
+    border-radius: 20px;
+    margin: 5px;
+    border: 1px solid var(--color-tertiary);
+    position: relative;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+}
+
+.name-list-item.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.button-delete {
+    background-color: transparent;
+    border: none;
+    color: #FF0000;
+    font-weight: bold;
+    font-size: 14px;
+    cursor: pointer;
+    padding: 0 5px;
+    position: absolute;
+    right: 5px;
+    top: 50%;
+    transform: translateY(-50%);
+    box-shadow: none;
+}
+
+.button-delete:hover {
+    color: #990000;
+}
+
+/* Media Query para telas menores */
+@media (max-width: 600px) {
+    .main-title {
+        font-size: 36px;
+    }
+
+    .section-title {
+        font-size: 24px;
+    }
+
+    .input-wrapper {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .input-name {
+        width: 100%;
+        border-radius: 25px;
+        margin-bottom: 10px;
+    }
+
+    .button-add {
+        width: 100%;
+        border-radius: 25px;
+    }
+
+    .button-draw {
+        padding: 10px 20px;
+    }
 }
